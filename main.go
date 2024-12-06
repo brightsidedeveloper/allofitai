@@ -23,6 +23,7 @@ func main() {
 
 	router := chi.NewMux()
 
+	router.Handle("/*", http.StripPrefix("/", http.FileServer(http.FS(FS))))
 	router.Get("/", handler.MakeHandler(handler.HandleHomeIndex))
 
 	port := os.Getenv("PORT")
