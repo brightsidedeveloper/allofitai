@@ -1,6 +1,10 @@
 package home
 
+import "allofitai/view/layout"
+
 
 templ Index() {
-    <div>hello from the home page</div>
+    @layout.App(true) {
+        <div class="text-5xl">Hello Templ - Lol</div>
+    }
 }

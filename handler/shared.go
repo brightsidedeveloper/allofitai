@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func MakeHandler(h func(http.ResponseWriter, r *http.Request) error) http.HandleFunc {
+func MakeHandler(h func(w http.ResponseWriter, r *http.Request) error) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if err := h(w, r); err != nil {
 			slog.Error("internal server error", "err", err, "path", r.URL.Path)

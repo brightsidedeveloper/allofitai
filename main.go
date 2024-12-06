@@ -2,6 +2,7 @@ package main
 
 import (
 	"allofitai/handler"
+	"embed"
 	"log"
 	"log/slog"
 	"net/http"
@@ -11,6 +12,9 @@ import (
 	"github.com/joho/godotenv"
 )
 
+//go:embed public
+var FS embed.FS
+
 func main() {
 	if err := initEverything(); err != nil {
 		log.Fatal(err)
@@ -19,7 +23,7 @@ func main() {
 
 	router := chi.NewMux()
 
-	router.Get("/", handler.HandleHomeIndex)
+	router.Get("/", handler.MakeHandler(handler.HandleHomeIndex))
 
 	port := os.Getenv("PORT")
 	slog.Info("Starting server", "port", port)
