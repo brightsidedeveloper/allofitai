@@ -1,6 +1,7 @@
 package main
 
 import (
+	"allofitai/handler"
 	"log"
 	"log/slog"
 	"net/http"
@@ -17,6 +18,8 @@ func main() {
 	}
 
 	router := chi.NewMux()
+
+	router.Get("/", handler.HandleHomeIndex)
 
 	port := os.Getenv("PORT")
 	slog.Info("Starting server", "port", port)

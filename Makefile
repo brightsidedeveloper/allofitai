@@ -16,9 +16,9 @@ css:
 templ:
 	@templ generate --watch --proxy=http://localhost:3000
 
-build:
+build: ## 
 	@templ generate view
-	@go build -tags dev -o bin/allofitai main.go 
+	@go build -o bin/allofitai main.go 
 
 up: ## Database migration up
 	@go run cmd/migrate/main.go up
