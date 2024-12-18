@@ -29,8 +29,11 @@ func main() {
 
 	router.Get("/", handler.Make(handler.HandleHomeIndex))
 
-	router.Get("/signin", handler.Make(handler.HandleAuthIndex))
-	router.Post("/signin", handler.Make(handler.HandleSignInCreate))
+	router.Get("/signin", handler.Make(handler.HandleSignInIndex))
+	router.Post("/signin", handler.Make(handler.HandleSignIn))
+
+	router.Get("/create", handler.Make(handler.HandleCreateIndex))
+	router.Post("/create", handler.Make(handler.HandleCreate))
 
 	port := os.Getenv("PORT")
 	slog.Info("Starting server", "port", port)

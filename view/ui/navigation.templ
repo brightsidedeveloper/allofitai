@@ -1,33 +1,31 @@
 package ui
 
-import (
-    "allofitai/view"
-)
+import "allofitai/view"
 
 templ Navigation() {
-    <div class="navbar bg-base-100 border-b border-gray-700">
-  <div class="flex-1">
-    <a class="btn btn-ghost text-xl">daisyUI</a>
-  </div>
-  <div class="flex-none">
-    if view.AuthenticatedUser(ctx).LoggedIn {
-        <ul class="menu menu-horizontal px-1">
-            <li><a>Link</a></li>
-            <li>
-                <details>
-                <summary>
-                    {view.AuthenticatedUser(ctx).Email}
-                </summary>
-                <ul class="bg-base-100 rounded-t-none p-2">
-                    <li><a>Settings</a></li>
-                    <li><a>Logout</a></li>
-                </ul>
-                </details>
-            </li>
-        </ul>
-    } else {
-        <a class="btn btn-primary">Login</a>
-    }
-  </div>
-</div>
+	<div class="navbar bg-base-100 border-b border-gray-700">
+		<div class="flex-1">
+			<a class="btn btn-ghost text-xl">GoAi</a>
+		</div>
+		<div class="flex-none">
+			if view.AuthenticatedUser(ctx).LoggedIn {
+				<ul class="menu menu-horizontal px-1">
+					<li><a>Link</a></li>
+					<li>
+						<details>
+							<summary>
+								{ view.AuthenticatedUser(ctx).Email }
+							</summary>
+							<ul class="bg-base-100 rounded-t-none p-2">
+								<li><a>Settings</a></li>
+								<li><a>Logout</a></li>
+							</ul>
+						</details>
+					</li>
+				</ul>
+			} else {
+				<a class="btn btn-primary" href="/signin">Sign In</a>
+			}
+		</div>
+	</div>
 }
