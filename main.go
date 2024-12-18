@@ -2,6 +2,7 @@ package main
 
 import (
 	"allofitai/handler"
+	"allofitai/pkg/sb"
 	"embed"
 	"log"
 	"log/slog"
@@ -22,9 +23,14 @@ func main() {
 	}
 
 	router := chi.NewMux()
+	router.Use(handler.WithUser)
 
 	router.Handle("/*", http.StripPrefix("/", http.FileServer(http.FS(FS))))
-	router.Get("/", handler.MakeHandler(handler.HandleHomeIndex))
+
+	router.Get("/", handler.Make(handler.HandleHomeIndex))
+
+	router.Get("/signin", handler.Make(handler.HandleAuthIndex))
+	router.Post("/signin", handler.Make(handler.HandleSignInCreate))
 
 	port := os.Getenv("PORT")
 	slog.Info("Starting server", "port", port)
@@ -32,5 +38,8 @@ func main() {
 }
 
 func initEverything() error {
-	return godotenv.Load()
+	if err := godotenv.Load(); err != nil {
+		return err
+	}
+	return sb.Init()
 }
