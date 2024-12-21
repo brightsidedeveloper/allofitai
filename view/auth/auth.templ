@@ -8,10 +8,14 @@ import (
 templ SignIn() {
 	@layout.App(false) {
 		<div class="flex items-center justify-center gap-8 h-screen px-8">
-			<div class="max-w-md w-full p-8 rounded-xl bg-base-300 gap-8 flex flex-col">
+			<div class="max-w-md w-fulsl p-8 rounded-xl bg-base-300 gap-8 flex flex-col">
 				<h1 class="text-3xl font-bold text-center">Sign In to GoAi</h1>
 				@AuthForm("/signin", supabase.UserCredentials{}, AuthErrors{})
-				<a href="/create" class="text-center text-sm text-primary">Don't have an account? Sign up</a>
+				<div class="flex w-full flex-col border-opacity-50 px-12">
+					<a href="/create" class="text-center text-sm text-primary">Don't have an account? Sign up</a>
+					<div class="divider">OR</div>
+					<a href="/oauth/google" class="btn btn-accent">Sign up with Google</a>
+				</div>
 			</div>
 		</div>
 	}
@@ -23,7 +27,10 @@ templ Create() {
 			<div class="max-w-md w-full p-8 rounded-xl bg-base-300 gap-8 flex flex-col">
 				<h1 class="text-3xl font-bold text-center">Sign Up for GoAi</h1>
 				@AuthForm("/create", supabase.UserCredentials{}, AuthErrors{})
-				<a href="/signin" class="text-center text-sm text-primary">Already have an account? Sign in</a>
+				<div class="flex w-full flex-col border-opacity-50 px-12">
+					<a href="/signin" class="text-center text-sm text-primary">Already have an account? Sign in</a>
+					<div class="divider">OR</div>
+				</div>
 			</div>
 		</div>
 	}
@@ -97,4 +104,12 @@ templ AuthForm(path string, creds supabase.UserCredentials, errors AuthErrors) {
 
 templ CreateSuccess(email string) {
 	<div>A confirmation email has been sent to: <span class="font-semibold text-success">{ email }</span></div>
+}
+
+templ CallbackScript() {
+	<script>
+		const url = window.location.href;
+		const newUrl = url.replace('#', '?');
+		window.location.href = newUrl;
+	</script>
 }

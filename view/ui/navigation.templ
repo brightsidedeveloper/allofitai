@@ -10,7 +10,6 @@ templ Navigation() {
 		<div class="flex-none">
 			if view.AuthenticatedUser(ctx).LoggedIn {
 				<ul class="menu menu-horizontal px-1">
-					<li><a>Link</a></li>
 					<li>
 						<details>
 							<summary>
@@ -22,10 +21,23 @@ templ Navigation() {
 							</ul>
 						</details>
 					</li>
+					<li>
+						@LogoutForm()
+					</li>
 				</ul>
 			} else {
 				<a class="btn btn-primary" href="/signin">Sign In</a>
 			}
 		</div>
 	</div>
+}
+
+templ LogoutForm() {
+	<form
+		method="post"
+		action="/logout"
+		class="flex flex-col gap-4 px-12"
+	>
+		<button class="">Logout</button>
+	</form>
 }

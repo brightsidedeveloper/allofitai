@@ -27,13 +27,24 @@ func main() {
 
 	router.Handle("/*", http.StripPrefix("/", http.FileServer(http.FS(FS))))
 
-	router.Get("/", handler.Make(handler.HandleHomeIndex))
+	router.Group(func(router chi.Router) {
+		router.Get("/", handler.Make(handler.RenderHome))
+		router.Get("/signin", handler.Make(handler.RenderSignIn))
+		router.Get("/create", handler.Make(handler.RenderCreate))
+	})
 
-	router.Get("/signin", handler.Make(handler.HandleSignInIndex))
-	router.Post("/signin", handler.Make(handler.HandleSignIn))
+	router.Group(func(router chi.Router) {
+		router.Use(handler.RequireAuth)
+		router.Get("/settings", handler.Make(handler.RenderSettings))
+	})
 
-	router.Get("/create", handler.Make(handler.HandleCreateIndex))
-	router.Post("/create", handler.Make(handler.HandleCreate))
+	router.Group(func(router chi.Router) {
+		router.Get("/oauth/google", handler.Make(handler.SignInWithGoogle))
+		router.Post("/signin", handler.Make(handler.SignIn))
+		router.Post("/create", handler.Make(handler.Create))
+		router.Post("/logout", handler.Make(handler.Logout))
+		router.Get("/auth/callback", handler.Make(handler.AuthCallback))
+	})
 
 	port := os.Getenv("PORT")
 	slog.Info("Starting server", "port", port)

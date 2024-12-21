@@ -5,6 +5,6 @@ import (
 	"net/http"
 )
 
-func HandleHomeIndex(w http.ResponseWriter, r *http.Request) error {
+func RenderHome(w http.ResponseWriter, r *http.Request) error {
 	return render(w, r, home.Index())
 }

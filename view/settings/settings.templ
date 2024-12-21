@@ -1,0 +1,12 @@
+package settings
+
+import (
+	"allofitai/types"
+	"allofitai/view/layout"
+)
+
+templ Index(user types.AuthenticatedUser) {
+	@layout.App(true) {
+		<div>{ user.Email } </div>
+	}
+}
